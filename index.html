@@ -1,533 +1,488 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>ResearchPro | منشئ الأبحاث</title>
-
-    <style>
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --dark: #111827;
-            --text: #1f2937;
-            --muted: #64748b;
-            --bg: #f1f5f9;
-            --card: #ffffff;
-            --border: #e2e8f0;
-            --success: #16a34a;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: Arial, Tahoma, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-        }
-
-        button,
-        input,
-        select,
-        textarea {
-            font-family: inherit;
-        }
-
-        header {
-            background: linear-gradient(135deg, #111827, #1e3a8a);
-            color: white;
-            padding: 18px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,.12);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
-            background: rgba(255,255,255,.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 23px;
-        }
-
-        .logo h1 {
-            font-size: 22px;
-        }
-
-        .logo p {
-            font-size: 12px;
-            color: #cbd5e1;
-            margin-top: 3px;
-        }
-
-        .status {
-            background: rgba(255,255,255,.12);
-            border: 1px solid rgba(255,255,255,.15);
-            padding: 9px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-        }
-
-        .layout {
-            max-width: 1250px;
-            margin: 30px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 25px;
-        }
-
-        .sidebar {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 22px;
-            height: fit-content;
-            box-shadow: 0 5px 20px rgba(15,23,42,.05);
-        }
-
-        .sidebar-title {
-            font-weight: bold;
-            margin-bottom: 18px;
-            font-size: 16px;
-        }
-
-        .feature {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            padding: 13px 10px;
-            border-radius: 12px;
-            margin-bottom: 8px;
-        }
-
-        .feature:hover {
-            background: #f8fafc;
-        }
-
-        .feature-icon {
-            width: 38px;
-            height: 38px;
-            background: #eff6ff;
-            color: var(--primary);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .feature strong {
-            font-size: 14px;
-        }
-
-        .feature span {
-            display: block;
-            font-size: 11px;
-            color: var(--muted);
-            margin-top: 3px;
-        }
-
-        .main {
-            min-width: 0;
-        }
-
-        .welcome {
-            margin-bottom: 20px;
-        }
-
-        .welcome h2 {
-            font-size: 27px;
-            margin-bottom: 7px;
-        }
-
-        .welcome p {
-            color: var(--muted);
-        }
-
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 28px;
-            box-shadow: 0 5px 20px rgba(15,23,42,.05);
-            margin-bottom: 22px;
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .card-header-icon {
-            width: 44px;
-            height: 44px;
-            background: #eff6ff;
-            color: var(--primary);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .card-header h3 {
-            font-size: 19px;
-        }
-
-        .card-header p {
-            color: var(--muted);
-            font-size: 12px;
-            margin-top: 4px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 18px;
-        }
-
-        .form-group {
-            margin-bottom: 4px;
-        }
-
-        .full {
-            grid-column: 1 / -1;
-        }
-
-        label {
-            display: block;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .required {
-            color: #ef4444;
-        }
-
-        input,
-        select,
-        textarea {
-            width: 100%;
-            border: 1px solid var(--border);
-            border-radius: 11px;
-            padding: 13px 14px;
-            background: #fff;
-            color: var(--text);
-            font-size: 14px;
-            outline: none;
-            transition: .2s;
-        }
-
-        input:focus,
-        select:focus,
-        textarea:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37,99,235,.1);
-        }
-
-        textarea {
-            min-height: 110px;
-            resize: vertical;
-        }
-
-        .hint {
-            color: var(--muted);
-            font-size: 11px;
-            margin-top: 5px;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 25px;
-        }
-
-        .btn {
-            border: none;
-            border-radius: 11px;
-            padding: 13px 20px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: .2s;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-            flex: 1;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            background: #f1f5f9;
-            color: #334155;
-        }
-
-        .btn-secondary:hover {
-            background: #e2e8f0;
-        }
-
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #15803d;
-        }
-
-        #resultSection {
-            display: none;
-        }
-
-        .result-toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .result-toolbar h3 {
-            font-size: 20px;
-        }
-
-        .toolbar-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .research-paper {
-            background: white;
-            border: 1px solid var(--border);
-            padding: 60px;
-            border-radius: 10px;
-            line-height: 2;
-            min-height: 700px;
-        }
-
-        .cover {
-            text-align: center;
-            min-height: 650px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .cover .university {
-            font-size: 21px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .cover .college {
-            font-size: 18px;
-            margin-bottom: 60px;
-        }
-
-        .cover h1 {
-            font-size: 30px;
-            line-height: 1.7;
-            margin-bottom: 50px;
-            color: #111827;
-        }
-
-        .cover-info {
-            line-height: 2.4;
-            font-size: 16px;
-        }
-
-        .research-paper hr {
-            border: none;
-            border-top: 1px solid #e5e7eb;
-            margin: 35px 0;
-        }
-
-        .research-paper h2 {
-            font-size: 24px;
-            margin: 35px 0 15px;
-            color: #111827;
-        }
-
-        .research-paper h3 {
-            font-size: 20px;
-            margin: 25px 0 10px;
-            color: #1e40af;
-        }
-
-        .research-paper p {
-            margin-bottom: 14px;
-            text-align: justify;
-        }
-
-        .research-paper ul,
-        .research-paper ol {
-            padding-right: 30px;
-            margin-bottom: 18px;
-        }
-
-        .research-paper li {
-            margin-bottom: 8px;
-        }
-
-        .toc {
-            background: #f8fafc;
-            padding: 22px;
-            border-radius: 12px;
-            margin: 20px 0;
-        }
-
-        .toc li {
-            margin-bottom: 8px;
-        }
-
-        .research-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 25px 0;
-        }
-
-        .research-table th,
-        .research-table td {
-            border: 1px solid #cbd5e1;
-            padding: 12px;
-            text-align: right;
-        }
-
-        .research-table th {
-            background: #eff6ff;
-        }
-
-        .empty {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--muted);
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: var(--muted);
-            font-size: 12px;
-        }
-
-        @media (max-width: 850px) {
-
-            .layout {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar {
-                display: none;
-            }
-
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .full {
-                grid-column: auto;
-            }
-
-            header {
-                padding: 15px;
-            }
-
-            .status {
-                display: none;
-            }
-
-            .research-paper {
-                padding: 30px 20px;
-            }
-
-            .result-toolbar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .toolbar-buttons {
-                width: 100%;
-            }
-
-            .toolbar-buttons .btn {
-                flex: 1;
-            }
-
-            .cover h1 {
-                font-size: 23px;
-            }
-        }
-
-        @media print {
-
-            body {
-                background: white;
-            }
-
-            header,
-            .sidebar,
-            .welcome,
-            #formSection,
-            .result-toolbar,
-            footer {
-                display: none !important;
-            }
-
-            .layout {
-                display: block;
-                margin: 0;
-                padding: 0;
-            }
-
-            .card {
-                border: none;
-                box-shadow: none;
-                padding: 0;
-            }
-
-            #resultSection {
-                display: block !important;
-            }
-
-            .research-paper {
-                border: none;
-                box-shadow: none;
-                padding: 0;
-            }
-
-            .cover {
-                min-height: 100vh;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ResearchPro | منشئ الأبحاث الذكي</title>
+
+<style>
+:root{
+    --primary:#2563eb;
+    --primary-dark:#1d4ed8;
+    --bg:#f1f5f9;
+    --card:#ffffff;
+    --text:#0f172a;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --success:#16a34a;
+    --danger:#dc2626;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Tahoma,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.9;
+}
+
+header{
+    background:linear-gradient(135deg,#1d4ed8,#2563eb);
+    color:white;
+    padding:18px 30px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 4px 15px #0002;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+}
+
+.logo span{
+    color:#bfdbfe;
+}
+
+.status{
+    background:#ffffff22;
+    padding:7px 15px;
+    border-radius:20px;
+    font-size:13px;
+}
+
+.layout{
+    display:grid;
+    grid-template-columns:250px 1fr;
+    min-height:calc(100vh - 70px);
+}
+
+.sidebar{
+    background:#0f172a;
+    color:white;
+    padding:25px 15px;
+}
+
+.sidebar h3{
+    margin-bottom:20px;
+}
+
+.side-item{
+    padding:12px 14px;
+    margin-bottom:8px;
+    border-radius:10px;
+    color:#cbd5e1;
+}
+
+.side-item.active,
+.side-item:hover{
+    background:#1e293b;
+    color:white;
+}
+
+.main{
+    padding:30px;
+    max-width:1400px;
+    width:100%;
+    margin:auto;
+}
+
+.welcome{
+    background:white;
+    border-radius:16px;
+    padding:25px;
+    margin-bottom:25px;
+    border:1px solid var(--border);
+}
+
+.welcome h1{
+    margin-bottom:8px;
+}
+
+.welcome p{
+    color:var(--muted);
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:25px;
+    margin-bottom:25px;
+}
+
+.card h2{
+    margin-bottom:20px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+.form-group{
+    margin-bottom:5px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px;
+    font-family:inherit;
+    font-size:15px;
+    background:white;
+    outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px #2563eb18;
+}
+
+textarea{
+    min-height:140px;
+    resize:vertical;
+}
+
+.help{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:5px;
+}
+
+.actions,
+.toolbar{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+.toolbar{
+    margin-top:0;
+    margin-bottom:20px;
+}
+
+button{
+    border:0;
+    border-radius:10px;
+    padding:12px 20px;
+    font-family:inherit;
+    font-size:15px;
+    cursor:pointer;
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:white;
+}
+
+.btn-primary:hover{
+    background:var(--primary-dark);
+}
+
+.btn-secondary{
+    background:#e2e8f0;
+    color:#0f172a;
+}
+
+.btn-success{
+    background:var(--success);
+    color:white;
+}
+
+.btn-danger{
+    background:var(--danger);
+    color:white;
+}
+
+.ai-box{
+    background:linear-gradient(135deg,#eff6ff,#f8fafc);
+    border:1px solid #bfdbfe;
+    padding:18px;
+    border-radius:12px;
+    margin-bottom:20px;
+}
+
+.ai-box strong{
+    color:var(--primary-dark);
+}
+
+.badge{
+    display:inline-block;
+    background:#dbeafe;
+    color:#1d4ed8;
+    padding:3px 10px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+.loading{
+    display:none;
+    text-align:center;
+    padding:35px;
+    background:white;
+    border-radius:16px;
+    margin-bottom:25px;
+}
+
+.spinner{
+    width:45px;
+    height:45px;
+    border:5px solid #dbeafe;
+    border-top-color:var(--primary);
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+    margin:0 auto 15px;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.progress{
+    max-width:500px;
+    margin:15px auto;
+    background:#e2e8f0;
+    height:8px;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress div{
+    height:100%;
+    width:0;
+    background:var(--primary);
+    animation:progress 8s infinite;
+}
+
+@keyframes progress{
+    0%{width:5%}
+    50%{width:70%}
+    100%{width:95%}
+}
+
+.error{
+    display:none;
+    background:#fee2e2;
+    color:#991b1b;
+    padding:15px;
+    border-radius:10px;
+    margin-top:15px;
+}
+
+.result{
+    display:none;
+}
+
+.paper{
+    background:white;
+    border-radius:16px;
+    border:1px solid var(--border);
+    padding:45px;
+    box-shadow:0 4px 20px #00000008;
+}
+
+.cover{
+    text-align:center;
+    min-height:450px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    border-bottom:2px solid var(--border);
+    margin-bottom:35px;
+}
+
+.cover h1{
+    font-size:32px;
+    color:var(--primary);
+    margin:20px 0;
+}
+
+.cover h2{
+    font-size:23px;
+}
+
+.cover p{
+    margin:5px;
+}
+
+.toc{
+    background:#f8fafc;
+    padding:25px;
+    border-radius:12px;
+    margin-bottom:35px;
+}
+
+.toc h2{
+    margin-bottom:15px;
+}
+
+.toc ol{
+    padding-right:25px;
+}
+
+.toc a{
+    color:var(--primary);
+    text-decoration:none;
+}
+
+.paper-section{
+    margin-bottom:35px;
+}
+
+.paper-section h2{
+    color:var(--primary);
+    border-right:5px solid var(--primary);
+    padding-right:12px;
+    margin-bottom:15px;
+}
+
+.paper-section h3{
+    margin:20px 0 8px;
+}
+
+.paper-section p{
+    text-align:justify;
+    margin-bottom:12px;
+}
+
+.paper-section ul,
+.paper-section ol{
+    padding-right:30px;
+    margin-bottom:15px;
+}
+
+.paper-section li{
+    margin-bottom:6px;
+}
+
+.research-table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+}
+
+.research-table th,
+.research-table td{
+    border:1px solid #cbd5e1;
+    padding:10px;
+    text-align:right;
+}
+
+.research-table th{
+    background:#eff6ff;
+}
+
+.hidden{
+    display:none!important;
+}
+
+.footer{
+    text-align:center;
+    color:var(--muted);
+    padding:25px;
+    font-size:13px;
+}
+
+.search-box{
+    margin-bottom:10px;
+}
+
+@media(max-width:850px){
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:none;
+    }
+
+    .main{
+        padding:15px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:auto;
+    }
+
+    .paper{
+        padding:22px;
+    }
+
+    .cover h1{
+        font-size:25px;
+    }
+}
+
+@media print{
+
+    body{
+        background:white;
+    }
+
+    header,
+    .sidebar,
+    .welcome,
+    #formCard,
+    .toolbar,
+    .footer,
+    .loading,
+    .error{
+        display:none!important;
+    }
+
+    .layout{
+        display:block;
+    }
+
+    .main{
+        padding:0;
+        max-width:none;
+    }
+
+    .result{
+        display:block!important;
+    }
+
+    .paper{
+        border:0;
+        box-shadow:none;
+        padding:20px;
+    }
+}
+</style>
 </head>
 
 <body>
@@ -535,20 +490,11 @@
 <header>
 
     <div class="logo">
-
-        <div class="logo-icon">
-            📚
-        </div>
-
-        <div>
-            <h1>ResearchPro</h1>
-            <p>منشئ الأبحاث الجامعية</p>
-        </div>
-
+        Research<span>Pro</span> 🎓
     </div>
 
     <div class="status">
-        ● جاهز لإنشاء بحث
+        ● النظام الذكي جاهز
     </div>
 
 </header>
@@ -556,735 +502,722 @@
 
 <div class="layout">
 
-    <aside class="sidebar">
+<aside class="sidebar">
 
-        <div class="sidebar-title">
-            مميزات المنصة
-        </div>
+    <h3>ResearchPro</h3>
 
-        <div class="feature">
-            <div class="feature-icon">📝</div>
-            <div>
-                <strong>إنشاء بحث</strong>
-                <span>أنشئ بحثًا منظمًا</span>
-            </div>
-        </div>
+    <div class="side-item active">
+        🧠 إنشاء بحث ذكي
+    </div>
 
-        <div class="feature">
-            <div class="feature-icon">🎓</div>
-            <div>
-                <strong>جامعات وكليات</strong>
-                <span>اختيارات جاهزة</span>
-            </div>
-        </div>
+    <div class="side-item">
+        🎓 الجامعات والمؤسسات
+    </div>
 
-        <div class="feature">
-            <div class="feature-icon">📚</div>
-            <div>
-                <strong>مواد دراسية</strong>
-                <span>مواد حسب الكلية</span>
-            </div>
-        </div>
+    <div class="side-item">
+        🏫 الكليات والمعاهد
+    </div>
 
-        <div class="feature">
-            <div class="feature-icon">📑</div>
-            <div>
-                <strong>تنسيق أكاديمي</strong>
-                <span>غلاف وفهرس ومراجع</span>
-            </div>
-        </div>
+    <div class="side-item">
+        📚 المواد والتخصصات
+    </div>
 
-        <div class="feature">
-            <div class="feature-icon">📄</div>
-            <div>
-                <strong>PDF</strong>
-                <span>حفظ البحث كملف PDF</span>
-            </div>
-        </div>
+    <div class="side-item">
+        🔎 المصادر
+    </div>
 
-    </aside>
+    <div class="side-item">
+        📄 PDF
+    </div>
 
+</aside>
 
-    <main class="main">
 
-        <div class="welcome">
+<main class="main">
 
-            <h2>إنشاء بحث جديد 👋</h2>
 
-            <p>
-                اختر الجامعة والكلية والمادة ثم أنشئ بحثًا منظمًا.
-            </p>
+<div class="welcome">
 
-        </div>
+    <h1>
+        منشئ الأبحاث الذكي
+    </h1>
 
-
-        <section class="card" id="formSection">
-
-            <div class="card-header">
-
-                <div class="card-header-icon">
-                    📝
-                </div>
-
-                <div>
-                    <h3>بيانات البحث</h3>
-                    <p>املأ البيانات الأساسية للبحث</p>
-                </div>
-
-            </div>
-
-
-            <div class="form-grid">
-
-                <div class="form-group full">
-
-                    <label>
-                        عنوان البحث
-                        <span class="required">*</span>
-                    </label>
-
-                    <input
-                        type="text"
-                        id="title"
-                        placeholder="مثال: دور النشاط البدني في تحسين صحة كبار السن">
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        اسم الطالب
-                        <span class="required">*</span>
-                    </label>
-
-                    <input
-                        type="text"
-                        id="student"
-                        placeholder="اكتب اسم الطالب">
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        اسم الجامعة
-                        <span class="required">*</span>
-                    </label>
-
-                    <select id="university" onchange="updateColleges()">
-
-                        <option value="">
-                            اختر الجامعة
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        الكلية
-                        <span class="required">*</span>
-                    </label>
-
-                    <select id="college" onchange="updateSubjects()" disabled>
-
-                        <option value="">
-                            اختر الجامعة أولًا
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        الفرقة
-                        <span class="required">*</span>
-                    </label>
-
-                    <select id="year">
-
-                        <option value="">
-                            اختر الفرقة
-                        </option>
-
-                        <option>الفرقة الأولى</option>
-                        <option>الفرقة الثانية</option>
-                        <option>الفرقة الثالثة</option>
-                        <option>الفرقة الرابعة</option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        اسم المادة
-                        <span class="required">*</span>
-                    </label>
-
-                    <select id="subject" onchange="checkOtherSubject()" disabled>
-
-                        <option value="">
-                            اختر الكلية أولًا
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="form-group hidden" id="otherSubjectGroup">
-
-                    <label>
-                        اكتب اسم المادة
-                    </label>
-
-                    <input
-                        type="text"
-                        id="otherSubject"
-                        placeholder="اكتب اسم المادة">
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        المشرف
-                    </label>
-
-                    <input
-                        type="text"
-                        id="supervisor"
-                        placeholder="اسم الدكتور / المشرف">
-
-                </div>
-
-
-                <div class="form-group full">
-
-                    <label>
-                        محاور أو متطلبات البحث
-                    </label>
-
-                    <textarea
-                        id="description"
-                        placeholder="اكتب النقاط التي تريد أن يتناولها البحث..."></textarea>
-
-                    <div class="hint">
-                        يمكنك ترك هذا الحقل فارغًا وسيتم إنشاء المحاور تلقائيًا.
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="actions">
-
-                <button
-                    class="btn btn-secondary"
-                    onclick="clearForm()">
-
-                    مسح البيانات
-
-                </button>
-
-                <button
-                    class="btn btn-primary"
-                    onclick="generateResearch()">
-
-                    ✨ إنشاء البحث
-
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <section class="card" id="resultSection">
-
-            <div class="result-toolbar">
-
-                <h3>
-                    📄 معاينة البحث
-                </h3>
-
-                <div class="toolbar-buttons">
-
-                    <button
-                        class="btn btn-secondary"
-                        onclick="editResearch()">
-
-                        ✏️ تعديل
-
-                    </button>
-
-                    <button
-                        class="btn btn-success"
-                        onclick="printPDF()">
-
-                        📥 حفظ PDF
-
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div
-                id="researchPaper"
-                class="research-paper">
-
-            </div>
-
-        </section>
-
-    </main>
+    <p>
+        اكتب أي موضوع أو طلب بحث، وسيتم إنشاء بحث مخصص
+        حسب الموضوع والكلية والتخصص والتعليمات التي تدخلها.
+    </p>
 
 </div>
 
 
-<footer>
+<div class="card" id="formCard">
 
-    ResearchPro © 2026 — منشئ الأبحاث الجامعية
+    <div class="ai-box">
 
-</footer>
+        <strong>
+            🧠 محرك البحث الذكي
+        </strong>
+
+        <br>
+
+        اكتب طلبك كما تريد، مثل:
+
+        <span class="badge">
+            تأثير الذكاء الاصطناعي على الأمن السيبراني
+        </span>
+
+        أو اكتب طلبًا طويلًا بالتفاصيل.
+
+    </div>
+
+
+    <h2>
+        بيانات البحث
+    </h2>
+
+
+    <div class="form-grid">
+
+
+        <div class="form-group full">
+
+            <label>
+                موضوع / طلب البحث *
+            </label>
+
+            <textarea
+                id="researchPrompt"
+                placeholder="مثال:
+أريد بحثًا عن تأثير الذكاء الاصطناعي على الأمن السيبراني، مع شرح المفاهيم الأساسية، أهم التطبيقات، المخاطر، التحديات، أمثلة واقعية، النتائج والتوصيات والمراجع."
+            ></textarea>
+
+            <div class="help">
+                لا يشترط اختيار مادة محددة؛ اكتب أي موضوع تريد البحث عنه.
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                نوع المؤسسة
+            </label>
+
+            <select
+                id="institutionType"
+                onchange="updateInstitutions()">
+
+                <option value="">
+                    اختر نوع المؤسسة
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                الجامعة / المعهد / الأكاديمية
+            </label>
+
+            <select
+                id="university"
+                onchange="updateColleges()">
+
+                <option value="">
+                    اختر المؤسسة
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                الكلية / المعهد / القسم
+            </label>
+
+            <select
+                id="college"
+                onchange="updateSubjects()"
+                disabled>
+
+                <option value="">
+                    اختر المؤسسة أولًا
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                التخصص
+            </label>
+
+            <select id="department">
+
+                <option value="">
+                    اختر التخصص
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                المادة
+            </label>
+
+            <select id="subject">
+
+                <option value="">
+                    اختر المادة
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                اسم الطالب *
+            </label>
+
+            <input
+                id="student"
+                placeholder="اكتب اسم الطالب">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                اسم الدكتور / المشرف
+            </label>
+
+            <input
+                id="supervisor"
+                placeholder="اختياري">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                المستوى الأكاديمي
+            </label>
+
+            <select id="academicLevel">
+
+                <option value="طالب جامعي">
+                    طالب جامعي
+                </option>
+
+                <option value="بكالوريوس">
+                    بكالوريوس
+                </option>
+
+                <option value="دبلوم">
+                    دبلوم
+                </option>
+
+                <option value="ماجستير">
+                    ماجستير
+                </option>
+
+                <option value="دكتوراه">
+                    دكتوراه
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                طول البحث
+            </label>
+
+            <select id="researchLength">
+
+                <option value="قصير">
+                    قصير - حوالي 3 صفحات
+                </option>
+
+                <option value="متوسط" selected>
+                    متوسط - حوالي 5 صفحات
+                </option>
+
+                <option value="طويل">
+                    طويل - حوالي 8 صفحات
+                </option>
+
+                <option value="مفصل جدًا">
+                    مفصل جدًا - حوالي 12 صفحة
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                لغة البحث
+            </label>
+
+            <select id="language">
+
+                <option value="العربية" selected>
+                    العربية
+                </option>
+
+                <option value="English">
+                    English
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group full">
+
+            <label>
+                تعليمات ومحاور إضافية
+            </label>
+
+            <textarea
+                id="requirements"
+                placeholder="مثال:
+ركز على مصر.
+أضف أمثلة حديثة.
+ضع جدول مقارنة.
+اجعل الأسلوب أكاديميًا.
+ضع المراجع في النهاية.
+لا تكرر الكلام."
+            ></textarea>
+
+        </div>
+
+    </div>
+
+
+    <div class="actions">
+
+        <button
+            class="btn-primary"
+            onclick="generateResearch()">
+
+            🧠 إنشاء البحث الذكي
+
+        </button>
+
+
+        <button
+            class="btn-secondary"
+            onclick="clearForm()">
+
+            مسح
+
+        </button>
+
+    </div>
+
+
+    <div
+        class="error"
+        id="errorBox">
+    </div>
+
+</div>
+
+
+<div
+    class="loading"
+    id="loading">
+
+    <div class="spinner"></div>
+
+    <h3>
+        ResearchPro يعمل...
+    </h3>
+
+    <p>
+        يتم تحليل طلبك وإنشاء بحث مخصص.
+    </p>
+
+    <div class="progress">
+        <div></div>
+    </div>
+
+</div>
+
+
+<section
+    class="result"
+    id="result">
+
+    <div class="toolbar">
+
+        <button
+            class="btn-primary"
+            onclick="window.print()">
+
+            📄 حفظ PDF
+
+        </button>
+
+
+        <button
+            class="btn-secondary"
+            onclick="editResearch()">
+
+            ✏️ تعديل
+
+        </button>
+
+
+        <button
+            class="btn-success"
+            onclick="copyResearch()">
+
+            📋 نسخ البحث
+
+        </button>
+
+    </div>
+
+
+    <article
+        class="paper"
+        id="researchPaper">
+    </article>
+
+</section>
+
+
+<div class="footer">
+
+    ResearchPro © 2026
+
+</div>
+
+
+</main>
+</div>
 
 
 <script>
 
 /* =========================================================
-   الجامعات والكليات والمواد
-========================================================= */
+   قاعدة مؤسسات التعليم العالي
+   ========================================================= */
 
-const universityData = {
+const institutionsData = {
 
-    "جامعة القاهرة": [
-        "كلية الآداب",
-        "كلية التجارة",
-        "كلية الحقوق",
-        "كلية العلوم",
-        "كلية الهندسة",
-        "كلية الحاسبات والذكاء الاصطناعي",
-        "كلية الطب",
-        "كلية الصيدلة",
-        "كلية التربية",
-        "كلية التربية الرياضية",
-        "كلية الإعلام",
-        "كلية الاقتصاد والعلوم السياسية"
+    "الجامعات الحكومية":[
+
+        "جامعة القاهرة",
+        "جامعة الإسكندرية",
+        "جامعة عين شمس",
+        "جامعة أسيوط",
+        "جامعة طنطا",
+        "جامعة المنصورة",
+        "جامعة الزقازيق",
+        "جامعة حلوان",
+        "جامعة المنيا",
+        "جامعة المنوفية",
+        "جامعة قناة السويس",
+        "جامعة جنوب الوادي",
+        "جامعة بني سويف",
+        "جامعة الفيوم",
+        "جامعة بنها",
+        "جامعة كفر الشيخ",
+        "جامعة سوهاج",
+        "جامعة بورسعيد",
+        "جامعة دمنهور",
+        "جامعة أسوان",
+        "جامعة دمياط",
+        "جامعة السويس",
+        "جامعة مدينة السادات",
+        "جامعة العريش",
+        "جامعة الوادي الجديد",
+        "جامعة مطروح",
+        "جامعة الأقصر",
+        "جامعة الغردقة"
     ],
 
-    "جامعة عين شمس": [
-        "كلية الآداب",
-        "كلية التجارة",
-        "كلية الحقوق",
-        "كلية العلوم",
-        "كلية الهندسة",
-        "كلية الحاسبات والمعلومات",
-        "كلية الطب",
-        "كلية الصيدلة",
-        "كلية التربية",
-        "كلية التربية الرياضية",
-        "كلية الألسن"
+
+    "الجامعات الخاصة":[
+
+        "جامعة 6 أكتوبر",
+        "جامعة أكتوبر للعلوم الحديثة والآداب",
+        "جامعة مصر للعلوم والتكنولوجيا",
+        "جامعة مصر الدولية",
+        "الجامعة الألمانية بالقاهرة",
+        "جامعة الأهرام الكندية",
+        "الجامعة البريطانية في مصر",
+        "الجامعة الحديثة للتكنولوجيا والمعلومات",
+        "جامعة سيناء",
+        "جامعة فاروس بالإسكندرية",
+        "جامعة النهضة ببني سويف",
+        "جامعة المستقبل",
+        "الجامعة المصرية الروسية",
+        "جامعة الدلتا للعلوم والتكنولوجيا",
+        "جامعة هليوبوليس",
+        "جامعة الجيزة الجديدة",
+        "جامعة دراية",
+        "جامعة بدر",
+        "جامعة حورس",
+        "الجامعة المصرية الصينية",
+        "جامعة ميريت",
+        "جامعة سفنكس",
+        "جامعة السلام",
+        "جامعة بدر بأسيوط",
+        "جامعة الصالحية الجديدة",
+        "جامعة الحياة",
+        "جامعة مايو",
+        "جامعة الريادة للعلوم والتكنولوجيا",
+        "جامعة الابتكار"
     ],
 
-    "جامعة الإسكندرية": [
-        "كلية الآداب",
-        "كلية التجارة",
-        "كلية الحقوق",
-        "كلية العلوم",
-        "كلية الهندسة",
-        "كلية الحاسبات وعلوم البيانات",
-        "كلية الطب",
-        "كلية الصيدلة",
-        "كلية التربية",
-        "كلية التربية الرياضية",
-        "كلية الزراعة",
-        "كلية السياحة والفنادق"
+
+    "الجامعات الأهلية":[
+
+        "جامعة الملك سلمان الدولية",
+        "جامعة العلمين الدولية",
+        "جامعة الجلالة",
+        "جامعة المنصورة الجديدة",
+        "الجامعة المصرية للتعلم الإلكتروني الأهلية",
+        "جامعة النيل الأهلية",
+        "الجامعة الأهلية الفرنسية في مصر",
+        "جامعة مصر للمعلوماتية",
+        "جامعة حلوان الأهلية",
+        "جامعة بنها الأهلية",
+        "جامعة المنوفية الأهلية",
+        "جامعة بني سويف الأهلية",
+        "جامعة أسيوط الأهلية",
+        "جامعة جنوب الوادي الأهلية",
+        "جامعة المنيا الأهلية",
+        "جامعة شرق بورسعيد الأهلية",
+        "جامعة الإسكندرية الأهلية",
+        "جامعة الزقازيق الأهلية",
+        "جامعة الإسماعيلية الجديدة الأهلية",
+        "جامعة السويس الأهلية",
+        "جامعة دمنهور الأهلية",
+        "جامعة القاهرة الأهلية",
+        "جامعة عين شمس الأهلية",
+        "جامعة سوهاج الأهلية",
+        "جامعة كفر الشيخ الأهلية",
+        "جامعة الوادي الجديد الأهلية",
+        "جامعة الفيوم الأهلية",
+        "جامعة طنطا الأهلية",
+        "جامعة الأقصر الأهلية",
+        "جامعة دمياط الأهلية",
+        "جامعة مدينة السادات الأهلية"
     ],
 
-    "جامعة دمنهور": [
-        "كلية الآداب",
-        "كلية التجارة",
-        "كلية الحقوق",
-        "كلية العلوم",
-        "كلية التربية",
-        "كلية التربية الرياضية",
-        "كلية التمريض",
-        "كلية الصيدلة",
-        "كلية الطب البيطري"
+
+    "الجامعات التكنولوجية":[
+
+        "جامعة القاهرة الجديدة التكنولوجية",
+        "جامعة الدلتا التكنولوجية",
+        "جامعة برج العرب التكنولوجية",
+        "جامعة طيبة الجديدة التكنولوجية",
+        "جامعة بني سويف التكنولوجية",
+        "جامعة 6 أكتوبر التكنولوجية",
+        "جامعة سمنود التكنولوجية",
+        "جامعة شرق بورسعيد التكنولوجية",
+        "جامعة أسيوط الجديدة التكنولوجية",
+        "جامعة حلوان التكنولوجية",
+        "جامعة السويس التكنولوجية",
+        "جامعة أسيوط التكنولوجية",
+        "جامعة الفيوم التكنولوجية"
     ],
 
-    "جامعة طنطا": [
-        "كلية الآداب",
-        "كلية التجارة",
-        "كلية الحقوق",
-        "كلية العلوم",
-        "كلية الهندسة",
-        "كلية الحاسبات والمعلومات",
-        "كلية الطب",
-        "كلية الصيدلة",
-        "كلية التربية",
-        "كلية التربية الرياضية"
+
+    "أكاديميات حكومية":[
+
+        "أكاديمية السادات للعلوم الإدارية",
+        "الأكاديمية العربية للعلوم والتكنولوجيا والنقل البحري",
+        "أكاديمية الشرطة",
+        "أكاديمية الفنون",
+        "أكاديمية ناصر العسكرية العليا"
     ],
 
-    "جامعة المنصورة": [
-        "كلية الآداب",
-        "كلية التجارة",
-        "كلية الحقوق",
-        "كلية العلوم",
-        "كلية الهندسة",
-        "كلية الحاسبات والمعلومات",
-        "كلية الطب",
-        "كلية الصيدلة",
-        "كلية التربية",
-        "كلية التربية الرياضية",
-        "كلية الزراعة"
+
+    "جامعات دولية وفروع جامعات أجنبية":[
+
+        "الجامعة الأمريكية بالقاهرة",
+        "الجامعة المصرية اليابانية للعلوم والتكنولوجيا",
+        "الجامعة الألمانية الدولية",
+        "جامعة سنجور",
+        "الجامعة الأوروبية في مصر",
+        "جامعة إسلسكا مصر",
+        "الجامعة الكندية في مصر",
+        "الجامعة الدولية في العاصمة الإدارية"
     ],
 
-    "جامعة الزقازيق": [
-        "كلية الآداب",
-        "كلية التجارة",
-        "كلية الحقوق",
-        "كلية العلوم",
-        "كلية الهندسة",
-        "كلية الحاسبات والمعلومات",
-        "كلية الطب",
-        "كلية الصيدلة",
-        "كلية التربية",
-        "كلية التربية الرياضية"
-    ],
 
-    "جامعة أسيوط": [
-        "كلية الآداب",
-        "كلية التجارة",
-        "كلية الحقوق",
-        "كلية العلوم",
-        "كلية الهندسة",
-        "كلية الحاسبات والمعلومات",
-        "كلية الطب",
-        "كلية الصيدلة",
-        "كلية التربية",
-        "كلية التربية الرياضية"
-    ],
+    "معاهد عليا":[
 
-    "جامعة سوهاج": [
-        "كلية الآداب",
-        "كلية التجارة",
-        "كلية الحقوق",
-        "كلية العلوم",
-        "كلية الهندسة",
-        "كلية الحاسبات والمعلومات",
-        "كلية الطب",
-        "كلية الصيدلة",
-        "كلية التربية",
-        "كلية التربية الرياضية"
-    ],
-
-    "جامعة بني سويف": [
-        "كلية الآداب",
-        "كلية التجارة",
-        "كلية الحقوق",
-        "كلية العلوم",
-        "كلية الهندسة",
-        "كلية الحاسبات والذكاء الاصطناعي",
-        "كلية الطب",
-        "كلية الصيدلة",
-        "كلية التربية",
-        "كلية التربية الرياضية"
-    ],
-
-    "جامعة الفيوم": [
-        "كلية الآداب",
-        "كلية التجارة",
-        "كلية الحقوق",
-        "كلية العلوم",
-        "كلية الهندسة",
-        "كلية الحاسبات والمعلومات",
-        "كلية الطب",
-        "كلية التربية",
-        "كلية التربية الرياضية"
-    ],
-
-    "جامعة المنوفية": [
-        "كلية الآداب",
-        "كلية التجارة",
-        "كلية الحقوق",
-        "كلية العلوم",
-        "كلية الهندسة",
-        "كلية الحاسبات والمعلومات",
-        "كلية الطب",
-        "كلية الصيدلة",
-        "كلية التربية الرياضية"
-    ],
-
-    "جامعة قناة السويس": [
-        "كلية الآداب والعلوم الإنسانية",
-        "كلية التجارة",
-        "كلية الحقوق",
-        "كلية العلوم",
-        "كلية الهندسة",
-        "كلية الحاسبات والمعلومات",
-        "كلية الطب",
-        "كلية الصيدلة",
-        "كلية التربية",
-        "كلية التربية الرياضية"
-    ],
-
-    "جامعة بورسعيد": [
-        "كلية الآداب",
-        "كلية التجارة",
-        "كلية الحقوق",
-        "كلية العلوم",
-        "كلية الهندسة",
-        "كلية الحاسبات وتكنولوجيا المعلومات",
-        "كلية الطب",
-        "كلية التربية",
-        "كلية التربية الرياضية"
-    ],
-
-    "جامعة السويس": [
-        "كلية الآداب",
-        "كلية التجارة",
-        "كلية العلوم",
-        "كلية الهندسة",
-        "كلية الحاسبات والمعلومات",
-        "كلية الطب",
-        "كلية التربية",
-        "كلية التربية الرياضية"
-    ],
-
-    "جامعة كفر الشيخ": [
-        "كلية الآداب",
-        "كلية التجارة",
-        "كلية الحقوق",
-        "كلية العلوم",
-        "كلية الهندسة",
-        "كلية الحاسبات والمعلومات",
-        "كلية الطب",
-        "كلية الصيدلة",
-        "كلية التربية",
-        "كلية التربية الرياضية"
-    ],
-
-    "جامعة حلوان": [
-        "كلية الآداب",
-        "كلية التجارة وإدارة الأعمال",
-        "كلية الحقوق",
-        "كلية العلوم",
-        "كلية الهندسة",
-        "كلية الحاسبات والذكاء الاصطناعي",
-        "كلية الطب",
-        "كلية التربية",
-        "كلية التربية الرياضية",
-        "كلية الفنون الجميلة",
-        "كلية الفنون التطبيقية"
-    ],
-
-    "جامعة بنها": [
-        "كلية الآداب",
-        "كلية التجارة",
-        "كلية الحقوق",
-        "كلية العلوم",
-        "كلية الهندسة",
-        "كلية الحاسبات والذكاء الاصطناعي",
-        "كلية الطب",
-        "كلية الصيدلة",
-        "كلية التربية",
-        "كلية التربية الرياضية"
-    ],
-
-    "جامعة المنيا": [
-        "كلية الآداب",
-        "كلية التجارة",
-        "كلية الحقوق",
-        "كلية العلوم",
-        "كلية الهندسة",
-        "كلية الحاسبات والمعلومات",
-        "كلية الطب",
-        "كلية الصيدلة",
-        "كلية التربية",
-        "كلية التربية الرياضية"
-    ],
-
-    "جامعة الوادي الجديد": [
-        "كلية الآداب",
-        "كلية العلوم",
-        "كلية التربية",
-        "كلية الزراعة",
-        "كلية الطب البيطري"
-    ],
-
-    "جامعة الأقصر": [
-        "كلية الآثار",
-        "كلية الألسن",
-        "كلية السياحة والفنادق",
-        "كلية الحاسبات والمعلومات",
-        "كلية الفنون الجميلة"
-    ],
-
-    "جامعة مطروح": [
-        "كلية التربية",
-        "كلية التربية الرياضية",
-        "كلية السياحة والفنادق",
-        "كلية التمريض",
-        "كلية الطب البيطري",
-        "كلية الحاسبات والمعلومات"
+        "معهد العبور العالي للهندسة والتكنولوجيا",
+        "معهد طيبة العالي للهندسة",
+        "معهد الدلتا العالي للهندسة والتكنولوجيا",
+        "معهد هندسة وتكنولوجيا الطيران",
+        "معهد المستقبل العالي للدراسات التكنولوجية المتخصصة",
+        "المعهد العالي لعلوم الحاسب ونظم المعلومات",
+        "المعهد العالي للحاسبات وتكنولوجيا المعلومات",
+        "معهد العبور العالي للإدارة والحاسبات ونظم المعلومات",
+        "معهد طيبة العالي للحاسب والعلوم الإدارية",
+        "معهد الفراعنة العالي للحاسب ونظم المعلومات",
+        "معهد القاهرة العالي للهندسة وعلوم الحاسب",
+        "المعهد العالي للحاسبات ونظم المعلومات بالتجمع الخامس",
+        "المعهد العالي للحاسب الآلي بكنج مريوط",
+        "المعهد العالي لنظم التجارة الإلكترونية بسوهاج",
+        "معهد الدلتا العالي لنظم المعلومات الإدارية والمحاسبية",
+        "المعهد العالي للإعلام وفنون الاتصال",
+        "المعهد الدولي العالي للإعلام",
+        "معهد الجزيرة للإعلام وعلوم الاتصال",
+        "أكاديمية أخبار اليوم",
+        "المعهد العالي للخدمة الاجتماعية بالقاهرة",
+        "المعهد العالي للخدمة الاجتماعية بالإسكندرية",
+        "المعهد العالي للخدمة الاجتماعية بدمنهور",
+        "المعهد العالي للخدمة الاجتماعية ببنها",
+        "المعهد العالي للخدمة الاجتماعية بالمنصورة",
+        "المعهد العالي للخدمة الاجتماعية ببورسعيد",
+        "المعهد العالي للسياحة والفنادق",
+        "المعهد العالي للدراسات الفندقية والسياحية",
+        "معهد الألسن العالي للسياحة والفنادق",
+        "المعهد العالي للغات",
+        "معهد المدينة العالي للغات",
+        "المعهد العالي للدراسات النوعية",
+        "المعهد العالي للفنون التطبيقية"
     ]
 
 };
 
 
 /* =========================================================
-   مواد الكليات
-========================================================= */
+   الكليات
+   ========================================================= */
 
-const subjectData = {
+const collegesData = {
 
-    "كلية التربية الرياضية": [
-        "الصحة والنشاط البدني لكبار السن",
-        "علم التدريب الرياضي",
-        "علم الحركة",
-        "علم النفس الرياضي",
-        "الإدارة الرياضية",
-        "طرق التدريس في التربية الرياضية",
-        "فسيولوجيا الرياضة",
-        "التشريح الرياضي",
-        "الإصابات الرياضية والإسعافات الأولية",
-        "اللياقة البدنية"
-    ],
-
-    "كلية الحاسبات والمعلومات": [
-        "مقدمة في علوم الحاسب",
-        "البرمجة",
-        "هياكل البيانات",
-        "قواعد البيانات",
-        "شبكات الحاسب",
-        "نظم التشغيل",
+    "كلية الحاسبات والمعلومات":[
+        "علوم الحاسب",
+        "نظم المعلومات",
+        "تكنولوجيا المعلومات",
+        "هندسة البرمجيات",
         "الأمن السيبراني",
-        "الذكاء الاصطناعي"
-    ],
-
-    "كلية الحاسبات والذكاء الاصطناعي": [
-        "مقدمة في علوم الحاسب",
-        "البرمجة",
-        "هياكل البيانات",
-        "قواعد البيانات",
         "الذكاء الاصطناعي",
-        "تعلم الآلة",
-        "الأمن السيبراني",
-        "شبكات الحاسب"
+        "علم البيانات",
+        "الشبكات"
     ],
 
-    "كلية الحاسبات وعلوم البيانات": [
+    "كلية الحاسبات والذكاء الاصطناعي":[
+        "علوم الحاسب",
+        "الذكاء الاصطناعي",
+        "الأمن السيبراني",
+        "علم البيانات",
+        "نظم المعلومات",
+        "هندسة البرمجيات"
+    ],
+
+    "كلية الحاسبات وعلوم البيانات":[
         "علوم البيانات",
-        "البرمجة",
-        "قواعد البيانات",
+        "تحليل البيانات",
         "الذكاء الاصطناعي",
         "تعلم الآلة",
-        "الإحصاء",
-        "تحليل البيانات"
-    ],
-
-    "كلية الحاسبات وتكنولوجيا المعلومات": [
-        "مقدمة في تكنولوجيا المعلومات",
         "البرمجة",
-        "قواعد البيانات",
-        "شبكات الحاسب",
-        "نظم التشغيل",
-        "الأمن السيبراني"
+        "قواعد البيانات"
     ],
 
-    "كلية الهندسة": [
-        "الرياضيات الهندسية",
-        "الفيزياء الهندسية",
-        "الميكانيكا",
-        "الدوائر الكهربائية",
+    "كلية الهندسة":[
         "هندسة الحاسبات",
-        "التحكم الآلي",
-        "البرمجة الهندسية"
+        "هندسة الاتصالات",
+        "الهندسة الكهربائية",
+        "الهندسة المدنية",
+        "الهندسة المعمارية",
+        "الميكاترونكس",
+        "التحكم الآلي"
     ],
 
-    "كلية التجارة": [
+    "كلية التجارة":[
         "المحاسبة",
         "إدارة الأعمال",
         "التسويق",
-        "الاقتصاد",
-        "إدارة الموارد البشرية",
         "التمويل",
-        "نظم المعلومات الإدارية"
+        "الاقتصاد",
+        "نظم المعلومات الإدارية",
+        "إدارة الموارد البشرية"
     ],
 
-    "كلية التجارة وإدارة الأعمال": [
-        "المحاسبة",
-        "إدارة الأعمال",
-        "التسويق",
-        "الاقتصاد",
-        "إدارة الموارد البشرية",
-        "التمويل",
-        "نظم المعلومات الإدارية"
+    "كلية الحقوق":[
+        "القانون المدني",
+        "القانون الجنائي",
+        "القانون التجاري",
+        "القانون الدستوري",
+        "القانون الدولي",
+        "حقوق الإنسان"
     ],
 
-    "كلية الآداب": [
+    "كلية الآداب":[
         "علم النفس",
         "علم الاجتماع",
         "التاريخ",
         "الجغرافيا",
         "الفلسفة",
-        "الإعلام",
-        "اللغة العربية"
+        "اللغة العربية",
+        "الإعلام"
     ],
 
-    "كلية الحقوق": [
-        "القانون الدستوري",
-        "القانون المدني",
-        "القانون الجنائي",
-        "القانون التجاري",
-        "القانون الدولي",
-        "حقوق الإنسان"
-    ],
-
-    "كلية العلوم": [
-        "الكيمياء",
-        "الفيزياء",
-        "الأحياء",
+    "كلية العلوم":[
         "الرياضيات",
+        "الفيزياء",
+        "الكيمياء",
+        "الأحياء",
         "الجيولوجيا",
         "البيولوجيا الجزيئية"
     ],
 
-    "كلية التربية": [
+    "كلية التربية":[
         "علم النفس التربوي",
         "أصول التربية",
-        "طرق التدريس",
-        "تكنولوجيا التعليم",
         "المناهج وطرق التدريس",
+        "تكنولوجيا التعليم",
         "القياس والتقويم"
     ],
 
-    "كلية الطب": [
+    "كلية الطب":[
         "التشريح",
         "علم وظائف الأعضاء",
         "علم الأمراض",
         "علم الأدوية",
-        "الصحة العامة",
-        "الباطنة"
+        "الباطنة",
+        "الصحة العامة"
     ],
 
-    "كلية الصيدلة": [
+    "كلية الصيدلة":[
         "علم الأدوية",
         "الكيمياء الصيدلية",
         "العقاقير",
@@ -1293,7 +1226,18 @@ const subjectData = {
         "الكيمياء الحيوية"
     ],
 
-    "كلية الإعلام": [
+    "كلية التربية الرياضية":[
+        "علم التدريب الرياضي",
+        "علم الحركة",
+        "فسيولوجيا الرياضة",
+        "علم النفس الرياضي",
+        "الإدارة الرياضية",
+        "التشريح الرياضي",
+        "الإصابات الرياضية",
+        "اللياقة البدنية"
+    ],
+
+    "كلية الإعلام":[
         "الصحافة",
         "الإذاعة والتليفزيون",
         "العلاقات العامة",
@@ -1302,184 +1246,327 @@ const subjectData = {
         "الرأي العام"
     ],
 
-    "كلية الاقتصاد والعلوم السياسية": [
-        "الاقتصاد",
-        "العلوم السياسية",
-        "العلاقات الدولية",
-        "السياسات العامة",
-        "الاقتصاد الدولي",
-        "النظم السياسية"
-    ],
-
-    "كلية الزراعة": [
+    "كلية الزراعة":[
         "الإنتاج النباتي",
         "الإنتاج الحيواني",
         "علوم الأغذية",
-        "الاقتصاد الزراعي",
         "التربة والمياه",
-        "الإرشاد الزراعي"
+        "الاقتصاد الزراعي"
     ],
 
-    "كلية التمريض": [
-        "أساسيات التمريض",
-        "تمريض الباطنة",
-        "تمريض الجراحة",
-        "صحة المجتمع",
-        "تمريض الأطفال",
-        "تمريض المسنين"
-    ],
-
-    "كلية السياحة والفنادق": [
+    "كلية السياحة والفنادق":[
         "إدارة الفنادق",
         "إدارة السياحة",
         "الإرشاد السياحي",
         "التسويق السياحي",
         "إدارة المطاعم",
         "السياحة المستدامة"
-    ],
-
-    "كلية الفنون الجميلة": [
-        "تاريخ الفن",
-        "الرسم",
-        "التصوير",
-        "النحت",
-        "التصميم",
-        "الفن المعاصر"
-    ],
-
-    "كلية الفنون التطبيقية": [
-        "التصميم",
-        "التصوير",
-        "الطباعة",
-        "المنتجات",
-        "النسيج",
-        "الإعلان"
     ]
 
 };
 
 
 /* =========================================================
-   تحميل الجامعات
-========================================================= */
+   المواد
+   ========================================================= */
 
-function loadUniversities() {
+const subjectsData = {
 
-    const university = document.getElementById("university");
+    "علوم الحاسب":[
+        "مقدمة في علوم الحاسب",
+        "البرمجة",
+        "هياكل البيانات",
+        "الخوارزميات",
+        "قواعد البيانات",
+        "نظم التشغيل",
+        "شبكات الحاسب",
+        "الأمن السيبراني",
+        "الذكاء الاصطناعي"
+    ],
 
-    Object.keys(universityData).forEach(name => {
+    "الأمن السيبراني":[
+        "أمن المعلومات",
+        "أمن الشبكات",
+        "التشفير",
+        "اختبار الاختراق",
+        "التحليل الجنائي الرقمي",
+        "أمن التطبيقات",
+        "الحوسبة السحابية الآمنة",
+        "إدارة المخاطر السيبرانية"
+    ],
 
-        const option = document.createElement("option");
+    "الذكاء الاصطناعي":[
+        "مقدمة في الذكاء الاصطناعي",
+        "تعلم الآلة",
+        "التعلم العميق",
+        "معالجة اللغة الطبيعية",
+        "رؤية الحاسب",
+        "الروبوتات"
+    ],
 
-        option.value = name;
-        option.textContent = name;
+    "المحاسبة":[
+        "المحاسبة المالية",
+        "محاسبة التكاليف",
+        "المراجعة",
+        "المحاسبة الإدارية",
+        "الضرائب"
+    ],
 
-        university.appendChild(option);
+    "إدارة الأعمال":[
+        "مبادئ الإدارة",
+        "التسويق",
+        "إدارة الموارد البشرية",
+        "إدارة العمليات",
+        "الإدارة الاستراتيجية"
+    ],
 
-    });
+    "القانون":[
+        "القانون المدني",
+        "القانون الجنائي",
+        "القانون التجاري",
+        "القانون الدولي",
+        "القانون الدستوري",
+        "حقوق الإنسان"
+    ],
+
+    "علم النفس":[
+        "علم النفس العام",
+        "علم النفس الاجتماعي",
+        "علم النفس التربوي",
+        "علم النفس النمو",
+        "علم النفس الإكلينيكي"
+    ],
+
+    "التربية الرياضية":[
+        "علم التدريب الرياضي",
+        "علم الحركة",
+        "فسيولوجيا الرياضة",
+        "علم النفس الرياضي",
+        "الإدارة الرياضية",
+        "الإصابات الرياضية"
+    ]
+
+};
+
+
+/* =========================================================
+   تحميل أنواع المؤسسات
+   ========================================================= */
+
+function loadInstitutionTypes(){
+
+    const select =
+        document.getElementById(
+            "institutionType"
+        );
+
+    Object.keys(institutionsData)
+        .forEach(type=>{
+
+            const option =
+                document.createElement("option");
+
+            option.value = type;
+            option.textContent = type;
+
+            select.appendChild(option);
+
+        });
 
 }
 
 
 /* =========================================================
-   تحديث الكليات
-========================================================= */
+   المؤسسات
+   ========================================================= */
 
-function updateColleges() {
+function updateInstitutions(){
 
-    const university = document.getElementById("university").value;
-    const college = document.getElementById("college");
-    const subject = document.getElementById("subject");
+    const type =
+        document.getElementById(
+            "institutionType"
+        ).value;
 
-    college.innerHTML = "";
-    subject.innerHTML = "";
+    const university =
+        document.getElementById(
+            "university"
+        );
 
-    subject.disabled = true;
+    const college =
+        document.getElementById(
+            "college"
+        );
 
-    if (!university) {
 
-        college.disabled = true;
+    university.innerHTML =
+        `<option value="">اختر المؤسسة</option>`;
 
-        college.innerHTML =
-            `<option value="">اختر الجامعة أولًا</option>`;
+    college.innerHTML =
+        `<option value="">اختر المؤسسة أولًا</option>`;
 
-        subject.innerHTML =
-            `<option value="">اختر الكلية أولًا</option>`;
+    college.disabled = true;
 
+
+    if(!type){
         return;
-
     }
+
+
+    institutionsData[type]
+        .forEach(name=>{
+
+            const option =
+                document.createElement("option");
+
+            option.value = name;
+            option.textContent = name;
+
+            university.appendChild(option);
+
+        });
+
+}
+
+
+/* =========================================================
+   الكليات
+   ========================================================= */
+
+function updateColleges(){
+
+    const university =
+        document.getElementById(
+            "university"
+        ).value;
+
+    const college =
+        document.getElementById(
+            "college"
+        );
+
+
+    college.innerHTML =
+        `<option value="">اختر الكلية / المعهد</option>`;
+
 
     college.disabled = false;
 
-    college.innerHTML =
-        `<option value="">اختر الكلية</option>`;
 
-    universityData[university].forEach(name => {
+    Object.keys(collegesData)
+        .forEach(name=>{
 
-        const option = document.createElement("option");
+            const option =
+                document.createElement("option");
 
-        option.value = name;
-        option.textContent = name;
+            option.value = name;
+            option.textContent = name;
 
-        college.appendChild(option);
+            college.appendChild(option);
 
-    });
+        });
+
+
+    const other =
+        document.createElement("option");
+
+    other.value = "أخرى";
+    other.textContent =
+        "أخرى / اكتب بنفسك";
+
+    college.appendChild(other);
 
 }
 
 
 /* =========================================================
-   تحديث المواد
-========================================================= */
+   التخصصات والمواد
+   ========================================================= */
 
-function updateSubjects() {
+function updateSubjects(){
 
-    const college = document.getElementById("college").value;
-    const subject = document.getElementById("subject");
+    const college =
+        document.getElementById(
+            "college"
+        ).value;
 
-    subject.innerHTML = "";
+    const department =
+        document.getElementById(
+            "department"
+        );
 
-    if (!college) {
+    const subject =
+        document.getElementById(
+            "subject"
+        );
 
-        subject.disabled = true;
 
-        subject.innerHTML =
-            `<option value="">اختر الكلية أولًا</option>`;
-
-        return;
-
-    }
-
-    subject.disabled = false;
+    department.innerHTML =
+        `<option value="">اختر التخصص</option>`;
 
     subject.innerHTML =
         `<option value="">اختر المادة</option>`;
 
-    const subjects =
-        subjectData[college] ||
-        [
+
+    if(collegesData[college]){
+
+        collegesData[college]
+            .forEach(item=>{
+
+                const option =
+                    document.createElement("option");
+
+                option.value = item;
+                option.textContent = item;
+
+                department.appendChild(option);
+
+            });
+
+    }
+
+
+    let subjects = [];
+
+
+    if(subjectsData[college]){
+
+        subjects =
+            subjectsData[college];
+
+    }
+    else{
+
+        subjects = [
+
             "مقدمة في المجال",
+            "مبادئ وتطبيقات",
             "موضوعات متخصصة",
             "دراسات متقدمة",
             "البحث العلمي"
+
         ];
 
-    subjects.forEach(name => {
+    }
 
-        const option = document.createElement("option");
 
-        option.value = name;
-        option.textContent = name;
+    subjects.forEach(item=>{
+
+        const option =
+            document.createElement("option");
+
+        option.value = item;
+        option.textContent = item;
 
         subject.appendChild(option);
 
     });
 
-    const other = document.createElement("option");
 
-    other.value = "other";
-    other.textContent = "مادة أخرى...";
+    const other =
+        document.createElement("option");
+
+    other.value = "أخرى";
+    other.textContent = "مادة أخرى";
 
     subject.appendChild(other);
 
@@ -1487,638 +1574,725 @@ function updateSubjects() {
 
 
 /* =========================================================
-   مادة أخرى
-========================================================= */
+   إنشاء البحث الذكي
+   ========================================================= */
 
-function checkOtherSubject() {
+async function generateResearch(){
 
-    const value =
-        document.getElementById("subject").value;
+    const prompt =
+        document.getElementById(
+            "researchPrompt"
+        ).value.trim();
 
-    const box =
-        document.getElementById("otherSubjectGroup");
+    const student =
+        document.getElementById(
+            "student"
+        ).value.trim();
 
-    if (value === "other") {
+    const institutionType =
+        document.getElementById(
+            "institutionType"
+        ).value;
 
-        box.classList.remove("hidden");
+    const university =
+        document.getElementById(
+            "university"
+        ).value;
 
-    } else {
+    const college =
+        document.getElementById(
+            "college"
+        ).value;
 
-        box.classList.add("hidden");
+    const department =
+        document.getElementById(
+            "department"
+        ).value;
 
-    }
-
-}
-
-
-/* =========================================================
-   الحصول على قيمة
-========================================================= */
-
-function getValue(id) {
-
-    return document.getElementById(id).value.trim();
-
-}
-
-
-/* =========================================================
-   إنشاء البحث
-========================================================= */
-
-function generateResearch() {
-
-    const title = getValue("title");
-    const student = getValue("student");
-    const university = getValue("university");
-    const college = getValue("college");
-    const year = getValue("year");
-
-    let subject =
-        document.getElementById("subject").value;
-
-    const otherSubject =
-        getValue("otherSubject");
+    const subject =
+        document.getElementById(
+            "subject"
+        ).value;
 
     const supervisor =
-        getValue("supervisor");
+        document.getElementById(
+            "supervisor"
+        ).value.trim();
 
-    const description =
-        getValue("description");
+    const academicLevel =
+        document.getElementById(
+            "academicLevel"
+        ).value;
+
+    const length =
+        document.getElementById(
+            "researchLength"
+        ).value;
+
+    const language =
+        document.getElementById(
+            "language"
+        ).value;
+
+    const requirements =
+        document.getElementById(
+            "requirements"
+        ).value.trim();
 
 
-    if (subject === "other") {
+    if(!prompt){
 
-        subject = otherSubject;
-
-    }
-
-
-    if (
-        !title ||
-        !student ||
-        !university ||
-        !college ||
-        !year ||
-        !subject
-    ) {
-
-        alert("من فضلك أكمل جميع البيانات المطلوبة أولًا.");
+        showError(
+            "اكتب موضوع البحث أو الطلب أولًا."
+        );
 
         return;
 
     }
 
 
+    if(!student){
+
+        showError(
+            "اكتب اسم الطالب."
+        );
+
+        return;
+
+    }
+
+
+    const data = {
+
+        prompt,
+
+        student,
+
+        institutionType:
+            institutionType || "غير محدد",
+
+        university:
+            university || "غير محددة",
+
+        college:
+            college || "غير محددة",
+
+        department:
+            department || "غير محدد",
+
+        subject:
+            subject || "غير محددة",
+
+        supervisor:
+            supervisor || "غير محدد",
+
+        academicLevel,
+
+        length,
+
+        language,
+
+        requirements
+
+    };
+
+
+    document.getElementById(
+        "formCard"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "loading"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "result"
+    ).style.display = "none";
+
+
+    try{
+
+        /*
+        ==============================================
+        الاتصال بالـ Backend
+        ==============================================
+        */
+
+        const response =
+            await fetch(
+                "/api/generate-research",
+                {
+
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(data)
+
+                }
+            );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "فشل الاتصال بالخدمة."
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        if(!result.research){
+
+            throw new Error(
+                "لم يتم استلام البحث."
+            );
+
+        }
+
+
+        renderResearch(
+            result.research,
+            data
+        );
+
+
+    }
+    catch(error){
+
+        console.error(error);
+
+
+        document.getElementById(
+            "formCard"
+        ).style.display = "block";
+
+
+        showError(
+            "تعذر إنشاء البحث. تأكد أن Backend الخاص بـ ResearchPro يعمل."
+        );
+
+    }
+    finally{
+
+        document.getElementById(
+            "loading"
+        ).style.display = "none";
+
+    }
+
+}
+
+
+/* =========================================================
+   عرض البحث
+   ========================================================= */
+
+function renderResearch(
+    research,
+    data
+){
+
     const paper =
-        document.getElementById("researchPaper");
+        document.getElementById(
+            "researchPaper"
+        );
+
+
+    const title =
+        extractTitle(
+            research,
+            data.prompt
+        );
 
 
     paper.innerHTML = `
 
         <div class="cover">
 
-            <div class="university">
-                ${university}
-            </div>
+            <h2>
+                ${escapeHTML(
+                    data.university
+                )}
+            </h2>
 
-            <div class="college">
-                ${college}
-            </div>
+            <p>
+                ${escapeHTML(
+                    data.college
+                )}
+            </p>
 
-            <div>
-                <strong>بحث بعنوان</strong>
-            </div>
+            <p>
+                ${escapeHTML(
+                    data.department
+                )}
+            </p>
 
             <h1>
-                ${title}
+                ${escapeHTML(title)}
             </h1>
 
-            <div class="cover-info">
+            <p>
+                <strong>
+                    إعداد الطالب:
+                </strong>
 
-                <div>
-                    <strong>إعداد الطالب:</strong>
-                    ${student}
-                </div>
+                ${escapeHTML(
+                    data.student
+                )}
+            </p>
 
-                <div>
-                    <strong>الفرقة:</strong>
-                    ${year}
-                </div>
+            <p>
+                <strong>
+                    المادة:
+                </strong>
 
-                <div>
-                    <strong>المقرر:</strong>
-                    ${subject}
-                </div>
+                ${escapeHTML(
+                    data.subject
+                )}
+            </p>
 
-                ${
-                    supervisor
-                    ?
-                    `
-                    <div>
-                        <strong>إشراف:</strong>
-                        ${supervisor}
-                    </div>
-                    `
-                    :
-                    ""
-                }
+            ${
+                data.supervisor !==
+                "غير محدد"
 
-                <div style="margin-top:40px;">
-                    العام الجامعي 2026 / 2027
-                </div>
+                ?
 
-            </div>
+                `
+                <p>
+                    <strong>
+                        إشراف:
+                    </strong>
+
+                    ${escapeHTML(
+                        data.supervisor
+                    )}
+                </p>
+                `
+
+                :
+
+                ""
+            }
+
+            <p>
+                العام الدراسي
+                2026 / 2027
+            </p>
 
         </div>
 
-
-        <hr>
-
-
-        <h2>فهرس البحث</h2>
 
         <div class="toc">
 
-            <ol>
+            <h2>
+                فهرس البحث
+            </h2>
 
-                <li>مقدمة</li>
-                <li>مشكلة البحث</li>
-                <li>أهداف البحث</li>
-                <li>أهمية البحث</li>
-                <li>مفاهيم ومصطلحات أساسية</li>
-                <li>الإطار النظري</li>
-                <li>أهم المحاور المرتبطة بالموضوع</li>
-                <li>التطبيقات والممارسات</li>
-                <li>التحديات والمعوقات</li>
-                <li>مناقشة الموضوع</li>
-                <li>النتائج</li>
-                <li>التوصيات</li>
-                <li>الخاتمة</li>
-                <li>المراجع</li>
-
-            </ol>
+            <div id="tocContent">
+                يتم إنشاء الفهرس...
+            </div>
 
         </div>
 
 
-        <h2>1. مقدمة</h2>
+        <div id="researchContent">
 
-        <p>
-            يعد موضوع <strong>${title}</strong> من الموضوعات
-            المهمة التي ترتبط بمجال ${college}، حيث يرتبط
-            هذا الموضوع بمجموعة من المفاهيم العلمية والتطبيقية
-            التي تساعد على فهم طبيعة المجال وأهميته.
-        </p>
+            ${research}
 
-        <p>
-            وتأتي دراسة هذا الموضوع في ضوء التطورات المستمرة
-            التي يشهدها المجال الأكاديمي والمهني، الأمر الذي
-            يجعل من الضروري التعرف على الأسس العلمية المرتبطة
-            به، ودراسة أهم العوامل التي تؤثر فيه.
-        </p>
-
-        <p>
-            ويركز هذا البحث على عرض موضوع
-            <strong>${title}</strong>
-            بصورة منظمة، مع توضيح المفاهيم الأساسية والمحاور
-            المرتبطة به، ثم مناقشة أهم النتائج والتوصيات التي
-            يمكن الاستفادة منها.
-        </p>
-
-
-        <h2>2. مشكلة البحث</h2>
-
-        <p>
-            تتمثل مشكلة البحث في الحاجة إلى دراسة
-            <strong>${title}</strong>
-            بصورة علمية منظمة، والتعرف على أهم جوانبه
-            والعوامل المرتبطة به، بالإضافة إلى توضيح
-            التطبيقات التي يمكن الاستفادة منها في مجال
-            ${college}.
-        </p>
-
-        <p>
-            ومن هنا يسعى البحث إلى تقديم إطار علمي يساعد
-            على فهم الموضوع بصورة أكثر شمولًا، وربط
-            الجوانب النظرية بالتطبيقات العملية.
-        </p>
-
-
-        <h2>3. أهداف البحث</h2>
-
-        <p>
-            يهدف البحث الحالي إلى تحقيق مجموعة من الأهداف
-            العلمية، ومن أهمها:
-        </p>
-
-        <ol>
-
-            <li>
-                التعرف على المفاهيم الأساسية المرتبطة بموضوع البحث.
-            </li>
-
-            <li>
-                توضيح أهمية الموضوع في مجال ${college}.
-            </li>
-
-            <li>
-                التعرف على أهم العوامل والجوانب المرتبطة بالموضوع.
-            </li>
-
-            <li>
-                عرض أهم التطبيقات والممارسات المرتبطة به.
-            </li>
-
-            <li>
-                التعرف على أبرز التحديات والمعوقات.
-            </li>
-
-            <li>
-                الوصول إلى مجموعة من النتائج والتوصيات العلمية.
-            </li>
-
-        </ol>
-
-
-        <h2>4. أهمية البحث</h2>
-
-        <p>
-            تنبع أهمية هذا البحث من أهمية موضوع
-            <strong>${title}</strong>
-            في مجال الدراسة، حيث تساعد دراسة الموضوع على
-            زيادة المعرفة العلمية وفهم العلاقات بين مختلف
-            العناصر المرتبطة به.
-        </p>
-
-        <p>
-            كما يمكن أن تسهم النتائج التي يتناولها البحث
-            في دعم الجانب التطبيقي، وتقديم مجموعة من
-            الأفكار التي يمكن الاستفادة منها في البيئة
-            الأكاديمية والمهنية.
-        </p>
-
-
-        <h2>5. مفاهيم ومصطلحات أساسية</h2>
-
-        <h3>مفهوم موضوع البحث</h3>
-
-        <p>
-            يقصد بموضوع البحث مجموعة المفاهيم والممارسات
-            والمعارف التي ترتبط بمجال الدراسة، والتي يمكن
-            تحليلها وفهمها من خلال الرجوع إلى الأسس العلمية
-            والدراسات المتخصصة.
-        </p>
-
-        <h3>المفهوم التطبيقي</h3>
-
-        <p>
-            لا تقتصر دراسة الموضوع على الجانب النظري فقط،
-            وإنما تمتد إلى الجانب التطبيقي الذي يوضح كيفية
-            الاستفادة من المعرفة العلمية في المواقف العملية.
-        </p>
-
-
-        <h2>6. الإطار النظري</h2>
-
-        <p>
-            يعتمد الإطار النظري للبحث على مجموعة من المفاهيم
-            والمبادئ العلمية المرتبطة بموضوع
-            <strong>${title}</strong>.
-            ويهدف هذا الإطار إلى تقديم صورة متكاملة عن
-            الموضوع من خلال تناول عناصره الرئيسية.
-        </p>
-
-        <h3>العوامل المرتبطة بالموضوع</h3>
-
-        <ul>
-
-            <li>العوامل العلمية والنظرية.</li>
-            <li>العوامل التطبيقية.</li>
-            <li>العوامل البشرية.</li>
-            <li>العوامل البيئية والتنظيمية.</li>
-            <li>التطورات الحديثة في المجال.</li>
-
-        </ul>
-
-        <h3>أهمية التنظيم والتخطيط</h3>
-
-        <p>
-            يمثل التخطيط والتنظيم عنصرين أساسيين في التعامل
-            مع مختلف الموضوعات التطبيقية، حيث يساعد التخطيط
-            الجيد على تحديد الأهداف والوسائل المناسبة لتحقيقها،
-            كما يساهم التنظيم في توزيع الأدوار والموارد بصورة
-            أكثر كفاءة.
-        </p>
-
-
-        <h2>7. أهم المحاور المرتبطة بالموضوع</h2>
-
-        ${
-            description
-            ?
-            `
-            <p>
-                وفقًا للمحاور التي تم تحديدها للبحث:
-            </p>
-
-            <p>
-                ${description}
-            </p>
-            `
-            :
-            `
-            <ul>
-
-                <li>المفاهيم الأساسية.</li>
-                <li>الأهداف والخصائص.</li>
-                <li>العوامل المؤثرة.</li>
-                <li>طرق التطبيق.</li>
-                <li>الأساليب الحديثة.</li>
-                <li>التحديات والمعوقات.</li>
-
-            </ul>
-            `
-        }
-
-
-        <h2>8. التطبيقات والممارسات</h2>
-
-        <p>
-            يمكن الاستفادة من المعرفة المرتبطة بموضوع
-            <strong>${title}</strong>
-            في مجموعة من التطبيقات العملية داخل مجال
-            ${college}.
-        </p>
-
-        <p>
-            ويتطلب التطبيق الفعال مراعاة طبيعة الفئة المستهدفة
-            والظروف المحيطة والإمكانات المتاحة، بالإضافة إلى
-            ضرورة الاعتماد على أساليب علمية واضحة في التخطيط
-            والتنفيذ والتقييم.
-        </p>
-
-        <table class="research-table">
-
-            <tr>
-                <th>العنصر</th>
-                <th>أهميته</th>
-            </tr>
-
-            <tr>
-                <td>التخطيط</td>
-                <td>تحديد الأهداف والوسائل المناسبة.</td>
-            </tr>
-
-            <tr>
-                <td>التنفيذ</td>
-                <td>تحويل الخطط النظرية إلى تطبيقات عملية.</td>
-            </tr>
-
-            <tr>
-                <td>المتابعة</td>
-                <td>التأكد من سير العمل وفق الأهداف.</td>
-            </tr>
-
-            <tr>
-                <td>التقييم</td>
-                <td>قياس النتائج وتحديد نقاط القوة والضعف.</td>
-            </tr>
-
-        </table>
-
-
-        <h2>9. التحديات والمعوقات</h2>
-
-        <p>
-            قد تواجه التطبيقات المرتبطة بموضوع البحث مجموعة
-            من التحديات التي تختلف باختلاف طبيعة المجال
-            والبيئة التعليمية أو التطبيقية.
-        </p>
-
-        <ul>
-
-            <li>نقص بعض الإمكانات والموارد.</li>
-
-            <li>ضعف التخطيط في بعض التطبيقات.</li>
-
-            <li>الحاجة إلى التدريب والتطوير المستمر.</li>
-
-            <li>اختلاف احتياجات الأفراد والفئات المستهدفة.</li>
-
-            <li>سرعة التطورات الحديثة في المجال.</li>
-
-        </ul>
-
-
-        <h2>10. مناقشة الموضوع</h2>
-
-        <p>
-            من خلال عرض الجوانب السابقة يتضح أن موضوع
-            <strong>${title}</strong>
-            لا يمكن تناوله من زاوية واحدة، بل يحتاج إلى
-            رؤية متكاملة تجمع بين الجانب النظري والتطبيقي.
-        </p>
-
-        <p>
-            كما يتضح أن نجاح التطبيقات المرتبطة بالموضوع
-            يعتمد على مجموعة من العوامل، من بينها جودة
-            التخطيط، وتوافر الإمكانات، وكفاءة القائمين
-            على التطبيق، إلى جانب المتابعة والتقييم المستمر.
-        </p>
-
-        <p>
-            وتؤكد طبيعة المجال على أهمية مواكبة التطورات
-            العلمية والتكنولوجية، والاستفادة من الدراسات
-            الحديثة في تطوير الممارسات وتحسين النتائج.
-        </p>
-
-
-        <h2>11. النتائج</h2>
-
-        <ol>
-
-            <li>
-                يمثل موضوع البحث جانبًا مهمًا في مجال ${college}.
-            </li>
-
-            <li>
-                يرتبط الموضوع بمجموعة من العوامل العلمية والتطبيقية.
-            </li>
-
-            <li>
-                يساهم التخطيط الجيد في تحسين جودة التطبيقات.
-            </li>
-
-            <li>
-                تعد المتابعة والتقييم من العناصر الأساسية لقياس النتائج.
-            </li>
-
-            <li>
-                توجد حاجة مستمرة إلى تطوير المعرفة والمهارات المرتبطة بالمجال.
-            </li>
-
-            <li>
-                يمكن للتطورات الحديثة أن تساهم في تحسين الممارسات التطبيقية.
-            </li>
-
-        </ol>
-
-
-        <h2>12. التوصيات</h2>
-
-        <ul>
-
-            <li>
-                زيادة الاهتمام بالدراسات العلمية المتخصصة في الموضوع.
-            </li>
-
-            <li>
-                تشجيع الطلاب على استخدام المصادر الأكاديمية الموثوقة.
-            </li>
-
-            <li>
-                تطوير البرامج والممارسات بما يتناسب مع التطورات الحديثة.
-            </li>
-
-            <li>
-                الاهتمام بالتدريب المستمر للمتخصصين.
-            </li>
-
-            <li>
-                دعم التطبيقات العملية وربطها بالمعرفة النظرية.
-            </li>
-
-            <li>
-                إجراء المزيد من الدراسات المرتبطة بموضوع البحث.
-            </li>
-
-        </ul>
-
-
-        <h2>13. الخاتمة</h2>
-
-        <p>
-            في ختام هذا البحث يمكن التأكيد على أن
-            <strong>${title}</strong>
-            يمثل موضوعًا مهمًا في مجال
-            ${college}، وأن دراسته تساعد على تكوين فهم
-            أكثر شمولًا للجوانب العلمية والتطبيقية المرتبطة به.
-        </p>
-
-        <p>
-            كما أن الاستفادة من المعرفة العلمية والدراسات
-            الحديثة، إلى جانب التخطيط الجيد والمتابعة
-            المستمرة، يمكن أن تسهم في تطوير الممارسات
-            وتحسين النتائج في المستقبل.
-        </p>
-
-
-        <h2>14. المراجع</h2>
-
-        <ol>
-
-            <li>
-                كتب ومراجع أكاديمية متخصصة في مجال ${college}.
-            </li>
-
-            <li>
-                الدراسات والبحوث العلمية المحكمة المرتبطة بموضوع البحث.
-            </li>
-
-            <li>
-                الدوريات والمجلات العلمية المتخصصة.
-            </li>
-
-            <li>
-                قواعد البيانات والمصادر الأكاديمية الموثوقة.
-            </li>
-
-            <li>
-                المراجع الجامعية والمقررات الدراسية ذات الصلة.
-            </li>
-
-        </ol>
+        </div>
 
     `;
 
 
-    document.getElementById("resultSection").style.display = "block";
+    buildTOC();
 
 
-    document.getElementById("resultSection")
-        .scrollIntoView({
-            behavior: "smooth"
-        });
+    document.getElementById(
+        "result"
+    ).style.display = "block";
+
+
+    window.scrollTo({
+
+        top:
+            document.getElementById(
+                "result"
+            ).offsetTop,
+
+        behavior:"smooth"
+
+    });
 
 }
 
 
 /* =========================================================
-   PDF
-========================================================= */
+   الفهرس
+   ========================================================= */
 
-function printPDF() {
+function buildTOC(){
 
-    window.print();
+    const content =
+        document.getElementById(
+            "researchContent"
+        );
+
+    const headings =
+        content.querySelectorAll("h2");
+
+
+    const toc =
+        document.getElementById(
+            "tocContent"
+        );
+
+
+    if(!headings.length){
+
+        toc.innerHTML =
+            "لا يوجد فهرس.";
+
+        return;
+
+    }
+
+
+    const ol =
+        document.createElement("ol");
+
+
+    headings.forEach(
+        (heading,index)=>{
+
+            const id =
+                "section-" + index;
+
+            heading.id = id;
+
+
+            const li =
+                document.createElement(
+                    "li"
+                );
+
+
+            const a =
+                document.createElement(
+                    "a"
+                );
+
+
+            a.href =
+                "#" + id;
+
+            a.textContent =
+                heading.textContent;
+
+
+            li.appendChild(a);
+
+            ol.appendChild(li);
+
+        }
+    );
+
+
+    toc.innerHTML = "";
+
+    toc.appendChild(ol);
+
+}
+
+
+/* =========================================================
+   استخراج العنوان
+   ========================================================= */
+
+function extractTitle(
+    text,
+    fallback
+){
+
+    const match =
+        text.match(
+            /<h1[^>]*>(.*?)<\/h1>/i
+        );
+
+
+    if(match){
+
+        return stripHTML(
+            match[1]
+        );
+
+    }
+
+
+    return fallback;
+
+}
+
+
+/* =========================================================
+   نسخ البحث
+   ========================================================= */
+
+async function copyResearch(){
+
+    const paper =
+        document.getElementById(
+            "researchPaper"
+        );
+
+
+    try{
+
+        await navigator.clipboard.writeText(
+            paper.innerText
+        );
+
+
+        alert(
+            "تم نسخ البحث بالكامل."
+        );
+
+    }
+    catch(error){
+
+        alert(
+            "تعذر نسخ البحث."
+        );
+
+    }
 
 }
 
 
 /* =========================================================
    تعديل البحث
-========================================================= */
+   ========================================================= */
 
-function editResearch() {
+function editResearch(){
 
-    document.getElementById("formSection")
-        .scrollIntoView({
-            behavior: "smooth"
-        });
-
-}
+    document.getElementById(
+        "result"
+    ).style.display = "none";
 
 
-/* =========================================================
-   مسح البيانات
-========================================================= */
+    document.getElementById(
+        "formCard"
+    ).style.display = "block";
 
-function clearForm() {
 
-    document.getElementById("title").value = "";
-    document.getElementById("student").value = "";
-    document.getElementById("university").value = "";
-    document.getElementById("college").value = "";
-    document.getElementById("year").value = "";
-    document.getElementById("subject").value = "";
-    document.getElementById("otherSubject").value = "";
-    document.getElementById("supervisor").value = "";
-    document.getElementById("description").value = "";
+    window.scrollTo({
 
-    document.getElementById("college").disabled = true;
-    document.getElementById("subject").disabled = true;
+        top:0,
 
-    document.getElementById("college").innerHTML =
-        `<option value="">اختر الجامعة أولًا</option>`;
+        behavior:"smooth"
 
-    document.getElementById("subject").innerHTML =
-        `<option value="">اختر الكلية أولًا</option>`;
-
-    document
-        .getElementById("otherSubjectGroup")
-        .classList.add("hidden");
-
-    document.getElementById("resultSection")
-        .style.display = "none";
+    });
 
 }
 
 
 /* =========================================================
-   تشغيل الموقع
-========================================================= */
+   مسح
+   ========================================================= */
 
-loadUniversities();
+function clearForm(){
+
+    document.querySelectorAll(
+        "#formCard input, #formCard textarea"
+    )
+    .forEach(
+        element=>{
+            element.value="";
+        }
+    );
+
+
+    document.getElementById(
+        "institutionType"
+    ).value="";
+
+
+    document.getElementById(
+        "university"
+    ).innerHTML =
+        `<option value="">
+            اختر المؤسسة
+        </option>`;
+
+
+    document.getElementById(
+        "college"
+    ).innerHTML =
+        `<option value="">
+            اختر المؤسسة أولًا
+        </option>`;
+
+
+    document.getElementById(
+        "college"
+    ).disabled=true;
+
+
+    document.getElementById(
+        "department"
+    ).innerHTML =
+        `<option value="">
+            اختر التخصص
+        </option>`;
+
+
+    document.getElementById(
+        "subject"
+    ).innerHTML =
+        `<option value="">
+            اختر المادة
+        </option>`;
+
+
+    document.getElementById(
+        "academicLevel"
+    ).value =
+        "طالب جامعي";
+
+
+    document.getElementById(
+        "researchLength"
+    ).value =
+        "متوسط";
+
+
+    document.getElementById(
+        "language"
+    ).value =
+        "العربية";
+
+
+    document.getElementById(
+        "errorBox"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "result"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "formCard"
+    ).style.display =
+        "block";
+
+}
+
+
+/* =========================================================
+   الأخطاء
+   ========================================================= */
+
+function showError(message){
+
+    const box =
+        document.getElementById(
+            "errorBox"
+        );
+
+
+    box.textContent =
+        message;
+
+
+    box.style.display =
+        "block";
+
+}
+
+
+/* =========================================================
+   حماية HTML
+   ========================================================= */
+
+function escapeHTML(text){
+
+    return String(text)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+function stripHTML(text){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.innerHTML =
+        text;
+
+
+    return (
+        div.textContent ||
+        div.innerText ||
+        ""
+    );
+
+}
+
+
+/* =========================================================
+   تشغيل البرنامج
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        loadInstitutionTypes();
+
+    }
+);
 
 </script>
 
