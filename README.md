@@ -1,0 +1,1 @@
+# researsh-genarator
